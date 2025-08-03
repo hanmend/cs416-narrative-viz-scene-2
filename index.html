@@ -9,7 +9,7 @@
 <svg width="400" height="400">
     <rect x="75" y="50" width="100" height="60" fill="darkgoldenrod" stroke="black"/>
     <text x="80" y="62" fill="white" font-size="10" text-anchor="left">FUEL TYPES:</text>
-    <text x="80" y="77" fill="green" font-size="10" text-anchor="left">Electric = green</text>
+    <text x="80" y="77" fill="lightgreen" font-size="10" text-anchor="left">Electric = green</text>
     <text x="80" y="89" fill="lightyellow" font-size="10" text-anchor="left">Gasoline = yellow</text>
     <text x="80" y="101" fill="blue" font-size="10" text-anchor="left">Diesel = blue</text>
 </svg>
@@ -26,7 +26,7 @@ const data = await d3.csv("https://flunky.github.io/cars2017.csv");
 var cx = d3.scaleLog().base(10).domain([10,150]).range([0,300]);
 var cy = d3.scaleLog().base(10).domain([10,150]).range([300,0]);
 var color = {
-    "Electricity": "green", 
+    "Electricity": "lightgreen", 
     "Gasoline": "lightyellow", 
     "Diesel": "blue"
 };
