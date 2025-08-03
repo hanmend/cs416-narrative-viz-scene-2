@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2017 Automobile Data</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body onload='init()'>
+<h2>2017 Automobile Fuel Efficiency</h2>
+<svg width="400" height="400"></svg>
+<p>
+    This graph shows us fuel efficiency on a logarithmic scale based on number of cylinders in an engine.<br> 
+    <br>The x-axis shows Average City MPG, the y-axis shows Average Highway MPG, and the size of the data point is relative to the number of cylinders in the engine.<br>
+    <br>We can observe that in general, engines with fewer cylinders are more fuel efficient, as the data points generally get smaller as we trend higher in MPG for both highway and city.
+</p>
+<button id="nextSlideButton" style="margin: 20px;">Learn more about fuel efficiency by engine fuel type! >></button>
+<script>
+async function init() {
+const data = await d3.csv("https://flunky.github.io/cars2017.csv");
+var cx = d3.scaleLog().base(10).domain([10,150]).range([0,300]);
+var cy = d3.scaleLog().base(10).domain([10,150]).range([300,0]);
+var color = {
+    "Electricity": "green", 
+    "Gasoline": "lightyellow", 
+    "Diesel": "blue"
+};
+d3.select("button")
+  .on("click", function(d) {
+    window.location.href = "https://www.google.com/"; 
+  });
+// d3.select("svg")
+//   .append("myLegend")
+//   .data(data)
+//   .enter()
+//   .append("g")
+//   .append("button")
+//   .attr("text", "")
+
+d3.select("svg")
+  .append("g")
+  .attr("transform", "translate(50,50)")
+  .selectAll("circle")
+  .data(data)
+  .enter()
+  .append("circle")
+    .attr("cx", function(d,i) { return cx(d.AverageCityMPG); })
+    .attr("cy", function(d,i) { return cy(d.AverageHighwayMPG); })
+    .attr("r", function(d,i) { return (parseInt(d.EngineCylinders)+2); })
+    .attr("stroke", "black")
+    .attr("fill", function(d,i) { return color[d.Fuel]; });
+d3.select("svg").append("g")
+  .attr("transform", "translate(50,50)")
+  .call(
+    d3.axisLeft(cy)
+    .tickValues([10,20,50,100])
+    .tickFormat(d3.format("~s"))
+  );
+d3.select("svg").append("g")
+  .attr("transform", "translate(50,350)")
+  .call(
+    d3.axisBottom(cx)
+    .tickValues([10,20,50,100])
+    .tickFormat(d3.format("~s"))
+  );
+}
+</script>
+</body>
+</html>
